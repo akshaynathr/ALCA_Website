@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<title>Register</title>
+	 
+		<link href="{{ url_for('static',filename='css/bootstrap.min.css') }}" rel="stylesheet">
+		<!--[if lt IE 9]>
+			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		<link href="{{ url_for('static', filename='css/styles.css' ) }}" rel="stylesheet">
+	</head>
+	<body>
+<!--login modal-->
+<div id="loginModal" class="modal show" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+  <div class="modal-content">
+      <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h1 class="text-center">Register</h1>
+      </div>
+      <div class="modal-body">
+          <form class="form col-md-12 center-block" method="post">
+           <div class="form-group">
+             <h5 style="color:#F00">
+                {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                     <ul class=flashes>
+                       {% for message in messages %}
+                                <li>{{ message }}</li>
+                        {% endfor %}
+                        </ul>
+                  {% endif %}
+                {% endwith %}
+             </h5>
+            </div>
+          <div class="form-group">
+              <input  name="name" type="text" class="form-control input-lg" placeholder="Name">
+            </div>
+            <div class="form-group">
+              <input name="emailid" type="text" class="form-control input-lg" placeholder="Email">
+            </div>
+            <div class="form-group">
+              <input  name="regid" type="password" class="form-control input-lg" placeholder="Reg Id">
+            </div>
+             <div class="form-group">
+              <input  name="password" type="password" class="form-control input-lg" placeholder="Password">
+            </div>
+             <div class="form-group">
+              <input  name="place" type="password" class="form-control input-lg" placeholder="City">
+            </div>
+             <div class="form-group">
+              <input  name="phoneno" type="password" class="form-control input-lg" placeholder="Mobile no">
+            </div>
+
+
+            <div class="form-group">
+                  <label>Location:</label><select name="location" class="btn-block">
+                   <option value="alappuzha">Alappuzha</option>
+                    <option value="idukki">Idukki</option>
+                  <option value="kannur">Kannur</option>
+                   <option value="ernakulam">Ernakulam</option>
+                 
+                   <option value="thrissur">Thrissur</option>
+                    <option value="kasargod">Kasargod</option>
+                     <option value="kollam">Kollam</option>
+                      <option value="kottayam">Kottayam</option>
+                       <option value="calicut">Calicut</option>
+                        <option value="palakkad">Palakkad</option>
+                         <option value="malappuram">Malappuram</option>
+
+                          <option value="pathanamthitta">Pathanamthitta</option>
+                           <option value="thiruvananthapuram">Thiruvananthapuram</option>
+                            <option value="wayanad">Wayanad</option>
+                           
+ 
+</select>
+
+
+            <!--   <input  name="location" type="text" class="form-control input-lg" placeholder="Location"> -->
+            </div>
+             
+             
+
+            <div class="form-group">
+              <!-- <button class="btn btn-primary btn-lg btn-block">Sign In</button> -->
+              <input type="submit" value="Register" class="btn btn-primary btn-lg btn-block" />
+              <span class="pull-right"><a href="/">Already registered?.Login..</a></span> 
+            </div>
+          </form>
+      </div>
+      <div class="modal-footer">
+           
+      </div>
+  </div>
+  </div>
+</div>
+	<!-- script references -->
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+		<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+	</body>
+</html>
