@@ -19,21 +19,31 @@ def home():
 @app.route('/'   ,methods=['POST'])
 
 def login():
-	emailid=None
 	regid=None
+	password=None
 	try:
-		emailid=request.form['emailid']
 		regid=request.form['regid']
+		password=request.form['password']
 	
 	except Exception as e:
 		print (e)	
-	if(emailid is None):
-		return "None error"
+	 
+	if regid.replace(" ",'')== '':
+		error="Please enter your registration Id"
 
-	user=User.objects(Q(emailid=emailid) & Q(regid=regid)).first()
+		flash(error)
+		return render_template("Login.html")
+
+	if password.replace(" ",'') == '':
+		error="Please enter your password"
+		flash(error)
+		return render_template("Login.html")
+
+
+	user=User.objects(Q(regid=regid) & Q(password=password)).first()
 	if user is None:
 		return "Not registered"
-	return render_template("profile.html",user=user)
+	return render_template("Profile.html",user=user)
 
  
 
@@ -52,29 +62,47 @@ def register():
 	emailid=None
 	location=None
 	regid=None
+	place=None
+	password=None
+	phoneno=None
 	name=request.form['name']	
 	emailid=request.form['emailid']
 	location=request.form['location']
 	regid=request.form['regid']
+	place=request.form['place']
+	password=request.form['password']
+	phoneno=request.form['phoneno']
 	print("name:%s") %{location}
+
 	
-	if name.replace(" ",'') == '' or name==" ":
+	
+	if name.replace(" ",'') == '':
 		error="Name field cannot be nil"
 		flash(error)
 		return render_template("Register.html")
 
-	if emailid.replace(" ",'')== '' or name==" ":
+	if emailid.replace(" ",'')== '' :
 		error="Emailid field cannot be nil"
 		flash(error) 
 		return render_template("Register.html")
 
-	if location.replace(" ",'')== '' or name==" ":
+	if location.replace(" ",'')== '' :
 		error="Location field cannot be nil"
 		flash( error)
 		return render_template("Register.html")
 		
-	if regid.replace(" ",'') == '' or name==" ":
-		error="RegId field cannot be nil"
+	if phoneno.replace(" ",'') == '':
+		error="Phoneno field cannot be nil"
+		flash( error)
+		return render_template("Register.html")
+
+	if place.replace(" ",'') == '':
+		error="City field cannot be nil"
+		flash( error)
+		return render_template("Register.html")
+ 
+	if password.replace(" ",'') == '':
+		error="Password field cannot be nil"
 		flash( error)
 		return render_template("Register.html")
 
@@ -90,6 +118,9 @@ def register():
 		user.emailid=emailid
 		user.location=location
 		user.regid=regid
+		user.password=password
+		user.place=place
+		user.phoneno=phoneno
 		user.save()
 	
 		return "User registered"
@@ -98,3 +129,9 @@ def register():
 def show():
 	users=User.objects
 	return render_template("show.html",users=users)
+
+
+@app.route('/profile')
+
+def prof():
+	return render_template("Profile.html")

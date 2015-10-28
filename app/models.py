@@ -5,9 +5,13 @@ from mongoengine import *
 
 class User(Document):
 	regid=StringField(required=True)
+	password=StringField(required=True)
+	emailid=StringField(required=True)
+	place=StringField(required=True)
+	phoneno=StringField(required=True)
 	name=StringField(required=True)
 	location=StringField(required=True)
-	emailid=StringField(required=True)
+	 
 
 	@property
 	def is_authenticated():
