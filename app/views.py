@@ -40,9 +40,13 @@ def login():
 		return render_template("Login.html")
 
 
-	user=User.objects(Q(regid=regid) & Q(password=password)).first()
+
+
+	user=User.objects(regid=regid).first()
 	if user is None:
-		return "Not registered"
+		error="It seems that the Register id or password you typed is wrong"
+		flash(error)
+		return render_template("Login.html")
 	return render_template("Profile.html",user=user)
 
  
@@ -73,8 +77,8 @@ def register():
 	password=request.form['password']
 	phoneno=request.form['phoneno']
 	print("name:%s") %{location}
-
 	
+
 	
 	if name.replace(" ",'') == '':
 		error="Name field cannot be nil"
@@ -123,7 +127,7 @@ def register():
 		user.phoneno=phoneno
 		user.save()
 	
-		return "User registered"
+		return render_template("registered.html")
 
 @app.route('/show',methods=['GET'])
 def show():
@@ -135,3 +139,86 @@ def show():
 
 def prof():
 	return render_template("Profile.html")
+
+
+@app.route('/admin')
+
+def adm():
+	return render_template("Admin.html")
+
+@app.route("/admin",methods=['POST'])
+def admin():
+	regid=None
+	password=None
+	location=None
+	sort=None
+
+	try:
+		sort=request.form['sort']
+	except:
+		sort=None
+
+	if sort=="sort":
+		location=request.form['location']
+		
+		users=User.objects(location=location)
+		return render_template("Admin_Profile.html",users=users)
+
+	try:
+		regid=request.form['regid']
+		password=request.form['password']
+	
+	except Exception as e:
+		print (e)	
+	 
+	if regid.replace(" ",'')== '':
+		error="Please enter your registration Id"
+
+		flash(error)
+		return render_template("Login.html")
+
+	if password.replace(" ",'') == '':
+		error="Please enter your password"
+		flash(error)
+		return render_template("Admin.html")
+
+
+
+	if regid=="adminalca123%" and password=="kl123%":
+		users=User.objects.all()
+		return render_template("Admin_Profile.html",users=users)
+	else:
+		flash("Wrong username or password for admin")
+		return render_template("Admin.html")
+
+
+
+@app.route("/delete")
+def delete():
+	return render_template("delete.html")
+
+
+
+@app.route("/delete",methods=["POST"])
+def delete_id():
+	regid=None
+	regid=request.form['regid']
+	try:
+		user=User.objects.get(regid=regid)
+	except :
+		user=None
+	if regid.replace(" ",'')== '':
+		error="Please fill valid Registration Id"
+		flash(error)
+		return render_template("delete.html")
+	elif user is None:
+		error="No user found with Register Id:"+regid
+		flash(error)
+		return render_template("delete.html")
+	else:
+		user.delete()
+		users=User.objects.all()
+		return render_template("Admin_Profile.html",users=users)
+
+
+

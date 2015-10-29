@@ -3,7 +3,7 @@
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
-		<title>Login</title>
+		<title>Delete</title>
 	 
 		<link href="{{ url_for('static',filename='css/bootstrap.min.css') }}" rel="stylesheet">
 		<!--[if lt IE 9]>
@@ -17,8 +17,8 @@
   <div class="modal-dialog">
   <div class="modal-content">
       <div class="modal-header">
-         <!--  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> -->
-          <h1 class="text-center">Login</h1>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h1 style="color:red" class="text-center">Delete</h1>
       </div>
 
 
@@ -42,15 +42,9 @@
             <div class="form-group">
               <input name="regid" type="text" class="form-control input-lg" placeholder="Register ID">
             </div>
-            <div class="form-group">
-              <input  name="password" type="password" class="form-control input-lg" placeholder="Password">
-            </div>
-            <div class="form-group">
-              <!-- <button class="btn btn-primary btn-lg btn-block">Sign In</button> -->
-              <input type="submit" value="Log In" class="btn btn-primary btn-lg btn-block" />
-
-              <span class="pull-right"><a href="/register">Register</a></span> <span><a href="/admin">Admin</a></span>
-            </div>
+            
+              <input style="color:red" type="submit" value="Delete" class="btn btn-primary btn-lg btn-block" />
+              <span class="pull-right"><a href="/admin">Admin</a></span> 
           </form>
       </div>
       <div class="modal-footer">
