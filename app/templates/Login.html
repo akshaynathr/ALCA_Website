@@ -4,6 +4,22 @@
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
 		<title>Login</title>
+
+
+     
+     
+    
+    <!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
+    <script src="{{ url_for('static',filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/skel.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/skel-layers.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/init.js') }}"></script>
+    <noscript>
+      <link rel="stylesheet" href="{{ url_for('static',filename='css/skel.css' ) }}" />
+      <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css' ) }}" />
+      <link rel="stylesheet" href="{{ url_for('static',filename='css/style-xlarge.css' ) }}" />
+    </noscript>
+    <!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
 	 
 		<link href="{{ url_for('static',filename='css/bootstrap.min.css') }}" rel="stylesheet">
 		<!--[if lt IE 9]>
@@ -12,6 +28,8 @@
 		<link href="{{ url_for('static', filename='css/styles.css' ) }}" rel="stylesheet">
 	</head>
 	<body>
+
+  
 <!--login modal-->
 <div id="loginModal" class="modal show" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog">
@@ -40,7 +58,7 @@
              </h5>
             </div>
             <div class="form-group">
-              <input name="regid" type="text" class="form-control input-lg" placeholder="Register ID">
+              <input name="regid" type="text" class="form-control input-lg" placeholder="Membership no">
             </div>
             <div class="form-group">
               <input  name="password" type="password" class="form-control input-lg" placeholder="Password">
@@ -55,7 +73,8 @@
       </div>
       <div class="modal-footer">
           <div class="col-md-12">
-          <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+          <a href="http://www.alca-kerala.in" class="btn"> Go Home</a>
+           
 		  </div>	
       </div>
   </div>
