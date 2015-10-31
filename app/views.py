@@ -1,11 +1,25 @@
 from flask import Flask,request,render_template,flash
 from models import User
 from mongoengine import connect,Q
+from werkzeug import secure_filename
+import os
+
 app=Flask(__name__)
+UPLOAD_FOLDER="static/tmp/"
+
 app.secret_key="akshay123"
+app.config['UPLOAD_FOLDER']=UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = 1* 1024 *100
+
 
 connect('ALCA')
+ 
+ALLOWED_EXTENSION=set(['jpg'])
 
+
+
+def allowed_file(filename):
+	return '.' in filename and filename.rsplit('.',1)[1] in ALLOWED_EXTENSION
 
 @app.route('/home')
 @app.route('/')
@@ -69,6 +83,10 @@ def register():
 	place=None
 	password=None
 	phoneno=None
+	telephone=None
+	website=None
+	business=None
+
 	name=request.form['name']	
 	emailid=request.form['emailid']
 	location=request.form['location']
@@ -76,9 +94,16 @@ def register():
 	place=request.form['place']
 	password=request.form['password']
 	phoneno=request.form['phoneno']
-	print("name:%s") %{location}
-	
+	business=request.form['business']
+	telephone=request.form['telephone']
+	file=request.files['file']
 
+	 
+	
+	if file is None:
+		error="Upload profile image"
+		flash(error)
+		return render_template("Register.html")
 	
 	if name.replace(" ",'') == '':
 		error="Name field cannot be nil"
@@ -110,24 +135,49 @@ def register():
 		flash( error)
 		return render_template("Register.html")
 
-	user=User.objects(emailid=emailid).first()
+	if business.replace(" ",'') == '':
+		error="Business Activity field cannot be nil"
+		flash( error)
+		return render_template("Register.html")
+
+	if telephone.replace(" ",'') == '':
+		error="Telephone field cannot be nil"
+		flash( error)
+		return render_template("Register.html")
+
+	
+
+	user=User.objects(regid=regid).first()
 	if user is not None:
 		error="Already Registered. Please Login"
 		flash(error)
 		return render_template("Register.html")
 
-	else:
-		user=User()
-		user.name=name
-		user.emailid=emailid
-		user.location=location
-		user.regid=regid
-		user.password=password
-		user.place=place
-		user.phoneno=phoneno
-		user.save()
 	
-		return render_template("registered.html")
+	if file and allowed_file(file.filename):
+		filename=regid+'.jpg'
+		file.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
+		print("Saved:")
+	else:
+		error="Please use a jpg image "
+		flash(error)
+		return render_template("Register.html")
+    		 
+
+	user=User()
+	user.name=name
+	user.emailid=emailid
+	user.location=location
+	user.regid=regid
+	user.password=password
+	user.place=place
+	user.phoneno=phoneno
+	user.image_id=regid+'.jpg'
+	user.telephone=telephone
+	user.website=website
+	user.save()
+
+	return render_template("registered.html")
 
 @app.route('/show',methods=['GET'])
 def show():
@@ -219,6 +269,9 @@ def delete_id():
 		user.delete()
 		users=User.objects.all()
 		return render_template("Admin_Profile.html",users=users)
+
+
+
 
 
 
