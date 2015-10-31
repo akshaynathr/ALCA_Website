@@ -11,6 +11,12 @@ class User(Document):
 	phoneno=StringField(required=True)
 	name=StringField(required=True)
 	location=StringField(required=True)
+	website=StringField()
+	establishment_name=StringField()
+	establishment_address=StringField()
+	panchayat=StringField()
+	business=StringField()
+	image_id=StringField()
 	 
 
 	@property
