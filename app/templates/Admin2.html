@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>ALCA Login</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="{{ url_for('static',filename='css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+
+    <!-- Fonts -->
+    <link href="{{ url_for('static',filename='font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+	<link href="{{ url_for('static',filename='css/animate.css') }}" rel="stylesheet" />
+    <!-- Squad theme CSS -->
+    <link href="{{ url_for('static',filename='css/style.css' ) }}" rel="stylesheet">
+	<link href="{{ url_for('static',filename='color/default.css') }}" rel="stylesheet">
+
+</head>
+
+<body id="page-top" data-spy="scroll" data-target=".navbar-custom">
+	<!-- Preloader -->
+	<div id="preloader">
+	  <div id="load"></div>
+	</div>
+
+    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation" style="z-index:9999">
+        <div class="container">
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="index.html">
+                    <h1>ALCA</h1>
+                </a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="http://www.alca-kerala.in">Home</a></li>
+        <li><a href="http://www.alca-kerala.in/#about">About</a></li>
+		 
+		<li><a href="http://www.alca-kerala.in/#contact">Contact</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Register/Login <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="http://159.203.120.131:8000">Login</a></li>
+            <li><a href="http://159.203.120.131:8000/register">Register</a></li>
+            
+            <li><a href="http://159.203.120.131:8000/admin">Admin Login</a></li>
+          </ul>
+        </li>
+      </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+	
+
+	<div id="loginModal" style="margin-top:100px;" class="modal show" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+  <div class="modal-content">
+      <div class="modal-header">
+          <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+         -->  <h1 class="text-center">Admin Login</h1>
+      </div>
+
+
+      <div class="modal-body">
+          <form class="form col-md-12 center-block" method="post">
+
+          <div class="form-group">
+             <h5 style="color:#F00">
+                {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                     <ul class=flashes>
+                       {% for message in messages %}
+                                <li>{{ message }}</li>
+                        {% endfor %}
+                        </ul>
+                  {% endif %}
+                {% endwith %}
+
+             </h5>
+            </div>
+            <div class="form-group">
+              <input name="regid" type="text" class="form-control input-lg" placeholder="Register ID">
+            </div>
+            <div class="form-group">
+              <input  name="password" type="password" class="form-control input-lg" placeholder="Password">
+            </div>
+            <div class="form-group">
+              <!-- <button class="btn btn-primary btn-lg btn-block">Sign In</button> -->
+              <input type="submit" value="Log In" class="btn btn-primary btn-lg btn-block" />
+              <span class="pull-right"><a href="/register">Register</a></span><span><a href="/">User login</a></span>
+            </div>
+          </form>
+      </div>
+      <div class="modal-footer">
+          <div class="col-md-12">
+        <a href="http://www.alca-kerala.in" >Go Home </a>
+      </div>  
+      </div>
+  </div>
+  </div>
+</div>
+
+
+	<footer>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 col-lg-12">
+					 
+					 
+					 
+				</div>
+			</div>	
+		</div>
+	</footer>
+
+    <!-- Core JavaScript Files -->
+    <script src="{{ url_for('static',filename='js/jquery.min.js' ) }}"></script>
+    <script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/jquery.easing.min.js') }}"></script>	
+	<script src="{{ url_for('static',filename='js/jquery.scrollTo.js') }}"></script>
+	<script src="{{ url_for('static',filename='js/wow.min.js') }}"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="{{ url_for('static',filename='js/custom.js')}}"></script>
+
+</body>
+
+</html>

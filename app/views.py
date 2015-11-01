@@ -212,7 +212,7 @@ def prof():
 @app.route('/admin')
 
 def adm():
-	return render_template("Admin.html")
+	return render_template("Admin2.html")
 
 @app.route("/admin",methods=['POST'])
 def admin():
@@ -248,7 +248,7 @@ def admin():
 	if password.replace(" ",'') == '':
 		error="Please enter your password"
 		flash(error)
-		return render_template("Admin.html")
+		return render_template("Admin2.html")
 
 
 
@@ -257,7 +257,7 @@ def admin():
 		return render_template("Admin_Profile.html",users=users)
 	else:
 		flash("Wrong username or password for admin")
-		return render_template("Admin.html")
+		return render_template("Admin2.html")
 
 
 
