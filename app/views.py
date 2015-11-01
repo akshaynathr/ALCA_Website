@@ -3,6 +3,7 @@ from models import User
 from mongoengine import connect,Q
 from werkzeug import secure_filename
 import os
+import datetime
 
 app=Flask(__name__)
 UPLOAD_FOLDER="static/tmp/"
@@ -97,6 +98,9 @@ def register():
 	business=request.form['business']
 	telephone=request.form['telephone']
 	file=request.files['file']
+	website=request.form['website']
+	company=request.form['company']
+	address=request.form['address']
 
 	 
 	
@@ -145,6 +149,17 @@ def register():
 		flash( error)
 		return render_template("Register.html")
 
+	if address.replace(" ",'') == '':
+		error="Address field cannot be nil"
+		flash(error)
+		return render_template("Register.html")
+
+	if company.replace(" ",'') == '':
+		error="Address field cannot be nil"
+		flash(error)
+		return render_template("Register.html")
+	
+
 	
 
 	user=User.objects(regid=regid).first()
@@ -172,6 +187,9 @@ def register():
 	user.password=password
 	user.place=place
 	user.phoneno=phoneno
+	user.company=company
+	user.address=address
+	user.regdate=str(datetime.date.today())
 	user.image_id=regid+'.jpg'
 	user.telephone=telephone
 	user.website=website
@@ -255,6 +273,7 @@ def delete_id():
 	regid=request.form['regid']
 	try:
 		user=User.objects.get(regid=regid)
+		name=user.name
 	except :
 		user=None
 	if regid.replace(" ",'')== '':
@@ -268,6 +287,8 @@ def delete_id():
 	else:
 		user.delete()
 		users=User.objects.all()
+		error="Member "+ name +" deleted"
+		flash(error)
 		return render_template("Admin_Profile.html",users=users)
 
 

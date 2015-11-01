@@ -24,6 +24,7 @@
 
 </style>
 <body >
+<h2 style="text-align:center"> ALCA Admin System</h2>
 <div class="row">
     <div  style="background-color:#fff; " class="col-md-12 col-sm-12">
     <form method="post">
@@ -74,7 +75,7 @@
 
              </h5>
 
-
+             <h3 style="text-align:center;"> All registered members</h3>
  {% for user in users %}
      
     <div class="container">
@@ -101,13 +102,23 @@
                          <h3> {{ user.name }}: </h3>
                     <hr />
                      <p >
-                          <span class="details"> Registration id : </span> {{ user.regid }} <br>
-                         <span class="details"> Phone no : </span> {{ user.phoneno }} <br>
+                          <span   class="details"> Registration date </span> {{ user.regdate }} <br>
+                          <span   class="details"> Membership id</span> {{ user.regid}} <br>
+                         <span class="details"> Mobile no: </span> {{ user.phoneno }} <br>
+                         <span class="details"> Telephone no: </span> {{ user.telephone }} <br>
+
                          <span class="details"> Email id : </span>{{  user.emailid }}<br>
                          <span class="details"> City :</span> {{ user.place}} <br> 
                          <span class="details"> Location : </span>{{ user.location }}<br>
-                         <span class="details"> Company Name : <br>
-                         <span class="details"> Company Address : <br>
+                         <span class="details"> Company Name : </span>{{ user.company}}<br>
+                         <span class="details"> Address : </span>{{ user.address}}<br>
+                         <span class="details"> Website </span>
+                         {{ user.website}}
+                         <br>
+                         <span class="details"> Business Activity : </span>
+                         {{ user.business}}
+                         <br>
+                         
 
                          </p>
                        <!--   <h3> Description: </h3>

@@ -37,7 +37,7 @@
                        <h4> {{ user.name }}</h4> 
                         <h5> <strong> Address </strong></h5>
                         <p>
-                            Pellentesque elementum dapibus convallis. 
+                            {{user.address}} 
                         </p>
                         <hr />
                         <h3><a  style="color:red" href="/"><span style="float=left;">LOGOUT</span></a></h3>
@@ -50,16 +50,19 @@
                          <h3> {{ user.name }}: </h3>
                     <hr />
                      <p >
-                         <span class="details"> Phone no : </span> {{ user.phoneno }} <br>
+                         <span class="details"> Registration date: </span> {{ user.regdate }} <br>
+                         <span class="details"> Mobile no: </span> {{ user.phoneno }} <br>
+                         <span class="details"> Telephone no: </span> {{ user.telephone }} <br>
+
                          <span class="details"> Email id : </span>{{  user.emailid }}<br>
                          <span class="details"> City :</span> {{ user.place}} <br> 
                          <span class="details"> Location : </span>{{ user.location }}<br>
-                         <span class="details"> Company Name : </span><br>
-                         <span class="details"> Address : </span><br>
+                         <span class="details"> Company Name : </span>{{ user.company}}<br>
+                         <span class="details"> Address : </span>{{ user.address}}<br>
                          <span class="details"> Website </span>
                          {{ user.website}}
                          <br>
-                         <span class="details"> Address : </span>
+                         <span class="details"> Business Activity : </span>
                          {{ user.business}}
                          <br>
                          

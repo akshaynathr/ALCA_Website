@@ -12,11 +12,12 @@ class User(Document):
 	name=StringField(required=True)
 	location=StringField(required=True)
 	website=StringField()
-	establishment_name=StringField()
-	establishment_address=StringField()
+	company=StringField()
+	address=StringField()
 	panchayat=StringField()
 	business=StringField()
 	image_id=StringField()
+	regdate=StringField()
 	 
 
 	@property
