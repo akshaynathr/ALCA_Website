@@ -21,6 +21,10 @@
 <style type="text/css">
     .details { min-width: 50px;}
 
+    span {display: inline-block;width: 200px;}
+
+    strong {  }
+
 
 </style>
 <body >
@@ -32,7 +36,7 @@
                 <div class="col-md-3 col-sm-3">
                                        
                     <div class="user-wrapper">
-                        <img src="{{ url_for('static',filename='tmp/'+user.image_id) }}" class="img-responsive" /> 
+                        <img src="{{ url_for('static',filename='tmp/'+user.image_id) }}" style=" height:50%;"class="img-responsive" /> 
                     <div class="description">
                        <h4> {{ user.name }}</h4> 
                         <h5> <strong> Address </strong></h5>
@@ -40,6 +44,7 @@
                             {{user.address}} 
                         </p>
                         <hr />
+                        <h3><a  style="color:green" href="/edit"><span style="float=left;">EDIT</span></a></h3>
                         <h3><a  style="color:red" href="/"><span style="float=left;">LOGOUT</span></a></h3>
                           </div>
                      </div>
@@ -49,26 +54,24 @@
                     <div class="description">
                          <h3> {{ user.name }}: </h3>
                     <hr />
-                     <p >
-                         <span   class="details"> Registration date </span><strong> {{ user.regdate }}</strong><br>
-                          <span   class="details"> Membership id</span> <strong>{{ user.regid}}</strong> <br>
-                         <span class="details"> Mobile no: </span> <strong>{{ user.phoneno }}</strong> <br>
-                         <span class="details"> Telephone no: </span><strong> {{ user.telephone }} </strong><br>
+                     <div style="font-size:2em;" >
+                           <span   class="details">Registration date</span><strong>:{{user.regdate}}</strong><br>
+                          <span   class="details">Membership id</span><strong>:{{user.regid}}</strong> <br>
+                         <span class="details"> Mobile no</span><strong>:{{user.phoneno }}</strong> <br>
+                         <span class="details"> Telephone no</span><strong>:{{user.telephone }} </strong><br>
 
-                         <span class="details"> Email id : </span><strong>{{  user.emailid }}</strong><br>
-                         <span class="details"> City :</span> <strong>{{ user.place}}</strong> <br> 
-                         <span class="details"> Location : </span><strong>{{ user.location }} </strong><br>
-                         <span class="details"> Company Name : </span><strong>{{ user.company}}</strong><br>
-                         <span class="details"> Address : </span><strong>{{ user.address}}</strong><br>
-                         <span class="details"> Website </span>
-<strong>                         {{ user.website}}</strong>
+                         <span class="details"> Email id</span><strong>:{{user.emailid }}</strong><br>
+                         <span class="details"> City</span><strong>:{{ user.place}}</strong> <br> 
+                         <span class="details"> Location  </span><strong>:{{ user.location }} </strong><br>
+                         <span class="details"> Company Name </span><strong>:{{ user.company}}</strong><br>
+                         <span class="details"> Address </span><strong>:{{ user.address}}</strong><br>
+                         <span class="details"> Website </span><strong>:{{ user.website}}</strong>
                          <br>
-                         <span class="details"> Business Activity : </span>
-                          <strong>{{ user.business}}</strong>
+                         <span class="details"> Business Details </span><strong>:{{ user.business}}</strong>
                          <br>
                          
 
-                         </p>
+                         </div>
                          <!-- <h3> Description: </h3> -->
                     <p>
                           

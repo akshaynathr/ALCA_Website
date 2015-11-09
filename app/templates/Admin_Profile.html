@@ -18,15 +18,20 @@
     <!-- CUSTOM STYLES -->
      <link href="{{ url_for('static',filename='assets/css/style.css') }}" rel="stylesheet" />
 </head>
+
 <style type="text/css">
     .details { min-width: 50px;}
+
+    span {display: inline-block;width: 200px;}
+
+    strong {  }
 
 
 </style>
 <body >
 <h2 style="text-align:center"> ALCA Admin System</h2>
-<div class="row">
-    <div  style="background-color:#fff; " class="col-md-12 col-sm-12">
+<div class="row" style="">
+    <div  style="background-color:#fff;padding-left:50px; padding-right:50px; " class="col-md-12 col-sm-12">
     <form method="post">
         <h5> Sort by place: </h5> 
          <label>Location:</label><select name="location" class="btn">
@@ -101,24 +106,21 @@
                     <div class="description">
                          <h3> {{ user.name }}: </h3>
                     <hr />
-                     <p >
-                          <span   class="details"> Registration date </span><strong> {{ user.regdate }}</strong><br>
-                          <span   class="details"> Membership id</span> <strong>{{ user.regid}}</strong> <br>
-                         <span class="details"> Mobile no: </span> <strong>{{ user.phoneno }}</strong> <br>
-                         <span class="details"> Telephone no: </span><strong> {{ user.telephone }} </strong><br>
+                     <p style="font-size:2em;" >
+                           <span   class="details">Registration date</span><strong>:{{user.regdate}}</strong><br>
+                          <span   class="details">Membership id</span><strong>:{{user.regid}}</strong> <br>
+                         <span class="details"> Mobile no</span><strong>:{{user.phoneno }}</strong> <br>
+                         <span class="details"> Telephone no</span><strong>:{{user.telephone }} </strong><br>
 
-                         <span class="details"> Email id : </span><strong>{{  user.emailid }}</strong><br>
-                         <span class="details"> City :</span> <strong>{{ user.place}}</strong> <br> 
-                         <span class="details"> Location : </span><strong>{{ user.location }} </strong><br>
-                         <span class="details"> Company Name : </span><strong>{{ user.company}}</strong><br>
-                         <span class="details"> Address : </span><strong>{{ user.address}}</strong><br>
-                         <span class="details"> Website </span>
-<strong>                         {{ user.website}}</strong>
+                         <span class="details"> Email id</span><strong>:{{user.emailid }}</strong><br>
+                         <span class="details"> City</span><strong>:{{ user.place}}</strong> <br> 
+                         <span class="details"> Location  </span><strong>:{{ user.location }} </strong><br>
+                         <span class="details"> Company Name </span><strong>:{{ user.company}}</strong><br>
+                         <span class="details"> Address </span><strong>:{{ user.address}}</strong><br>
+                         <span class="details"> Website </span><strong>:{{ user.website}}</strong>
                          <br>
-                         <span class="details"> Business Activity : </span>
-                          <strong>{{ user.business}}</strong>
+                         <span class="details"> Business Details </span><strong>:{{ user.business}}</strong>
                          <br>
-                         
 
                          </p>
                        <!--   <h3> Description: </h3>
