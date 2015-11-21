@@ -35,6 +35,7 @@
     <form method="post">
         <h5> Sort by place: </h5> 
          <label>Location:</label><select name="location" class="btn">
+                   <option value="All">All</option>
                    <option value="alappuzha">Alappuzha</option>
                     <option value="idukki">Idukki</option>
                   <option value="kannur">Kannur</option>
@@ -81,6 +82,10 @@
              </h5>
 
              <h3 style="text-align:center;"> All registered members</h3>
+
+             {% if user is defined %}
+                <h3  style="text-align:center;"> No registered members </h3>
+            {% endif %}
  {% for user in users %}
      
     <div class="container">
