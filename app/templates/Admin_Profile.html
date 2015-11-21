@@ -98,6 +98,14 @@
                          <img src="{{ url_for('static',filename='tmp/'+user.image_id) }}" class="img-responsive" /> 
                          <div class="description">
                        <h4> {{ user.name }}</h4> 
+                    {% if user.enabled %}
+                    <h4 style="color:green"> Appoved</h4>
+                       
+                    {% else %} 
+                    <h4 style="color:red"> Approval pending</h4>
+
+
+                    {% endif %}
                         <h5> <strong> Address </strong></h5>
                         <p>
                             {{ user.address}} 
@@ -110,10 +118,22 @@
                 <div class="col-md-9 col-sm-9  user-wrapper">
                     <div class="description">
                          <h3> {{ user.name }}: </h3>
+                          {% if user.enabled %}
+                    <h4 style="color:green"> Appoved</h4>
+                       
+                    {% else %} 
+                    <h4 style="color:red; display:inline-block;"> Approval pending-</h4>
+                     <a  href="/hjklenatble12">Enable</a>
+
+                    {% endif %}
                     <hr />
                      <p style="font-size:2em;" >
                            <span   class="details">Registration date</span><strong>:{{user.regdate}}</strong><br>
+
+                            {% if  user.enabled %}
                           <span   class="details">Membership id</span><strong>:{{user.regid}}</strong> <br>
+                          {% endif %}
+                          <span class="details">Username</span><strong>:{{user.username }}</strong> <br>
                          <span class="details"> Mobile no</span><strong>:{{user.phoneno }}</strong> <br>
                          <span class="details"> Telephone no</span><strong>:{{user.telephone }} </strong><br>
 

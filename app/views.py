@@ -34,17 +34,17 @@ def home():
 @app.route('/'   ,methods=['POST'])
 
 def login():
-	regid=None
+	username=None
 	password=None
 	try:
-		regid=request.form['regid']
+		username=request.form['username']
 		password=request.form['password']
 	
 	except Exception as e:
 		print (e)
 	 
-	if regid.replace(" ",'')== '':
-		error="Please enter your registration Id"
+	if username.replace(" ",'')== '':
+		error="Please enter your username"
 
 		flash(error)
 		return render_template("Login.html")
@@ -57,12 +57,17 @@ def login():
 
 
 
-	user=User.objects(Q(regid=regid) & Q (password=password) ).first()
+	user=User.objects(Q(username=username) & Q (password=password) ).first()
 	if user is None:
-		error="It seems that the Register id or password you typed is wrong"
+		error="It seems that the username or password you typed is wrong"
 		flash(error)
 		return render_template("Login.html")
-	return render_template("Profile.html",user=user)
+	elif user.enabled == False:
+		error="Sorry. Your account is not enabled yet by administrator"
+		flash(error)
+		return render_template("Login.html")
+	else:
+		return render_template("Profile.html",user=user)
 
  
 
@@ -80,6 +85,7 @@ def register():
 	name=None
 	emailid=None
 	location=None
+	username=None
 	regid=None
 	place=None
 	password=None
@@ -91,7 +97,7 @@ def register():
 	name=request.form['name']	
 	emailid=request.form['emailid']
 	location=request.form['location']
-	regid=request.form['regid']
+	username=request.form['username']
 	place=request.form['place']
 	password=request.form['password']
 	phoneno=request.form['phoneno']
@@ -101,6 +107,11 @@ def register():
 	website=request.form['website']
 	company=request.form['company']
 	address=request.form['address']
+
+	if not username:
+		error="Username field cannot be nil"
+		flash(error)
+		return render_template("Register.html")
 
 	 
 	
@@ -162,15 +173,15 @@ def register():
 
 	
 
-	user=User.objects(regid=regid).first()
+	user=User.objects(username=username).first()
 	if user is not None:
-		error="Already Registered. Please Login"
+		error="Username is already registered. Please choose another username"
 		flash(error)
 		return render_template("Register.html")
 
 	
 	if file and allowed_file(file.filename):
-		filename=regid+'.jpg'
+		filename=username+'.jpg'
 		file.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
 		print("Saved:")
 	else:
@@ -183,14 +194,14 @@ def register():
 	user.name=name
 	user.emailid=emailid
 	user.location=location
-	user.regid=regid
+	user.username=username
 	user.password=password
 	user.place=place
 	user.phoneno=phoneno
 	user.company=company
 	user.address=address
 	user.regdate=str(datetime.date.today())
-	user.image_id=regid+'.jpg'
+	user.image_id=username+'.jpg'
 	user.telephone=telephone
 	user.website=website
 	user.save()
@@ -256,7 +267,7 @@ def admin():
 
 
 	if regid=="adminalca123%" and password=="kl123%":
-		users=User.objects.all()
+		users=User.objects.order_by('regdate')
 		return render_template("Admin_Profile.html",users=users)
 	else:
 		flash("Wrong username or password for admin")
@@ -272,19 +283,19 @@ def delete():
 
 @app.route("/delete",methods=["POST"])
 def delete_id():
-	regid=None
-	regid=request.form['regid']
+	username=None
+	username=request.form['username']
 	try:
-		user=User.objects.get(regid=regid)
+		user=User.objects.get(username=username)
 		name=user.name
 	except :
 		user=None
-	if regid.replace(" ",'')== '':
-		error="Please fill valid Registration Id"
+	if username.replace(" ",'')== '':
+		error="Please fill valid username"
 		flash(error)
 		return render_template("delete.html")
 	elif user is None:
-		error="No user found with Register Id:"+regid
+		error="No user found with username:"+username
 		flash(error)
 		return render_template("delete.html")
 	else:
@@ -301,11 +312,11 @@ def edit_get():
 
 @app.route("/edit",methods=['POST'])
 def edit():
-	memberno=request.form['memberno']
+	username=request.form['username']
 	password=request.form['password']
 
-	if not memberno:
-		error="Enter memberno"
+	if not username:
+		error="Enter username"
 		flash(error)
 		return render_template("Edit.html")
 
@@ -316,7 +327,7 @@ def edit():
 		return render_template("Edit.html")
 
 
-	user=User.objects(Q(regid=memberno) & Q(password=password) ).first()
+	user=User.objects(Q(username=username) & Q(password=password) ).first()
 	print(user)
 	if  user is None:
 		error="Incorrect user"
@@ -372,7 +383,7 @@ def edit():
 		user.update(company=company)
 	
 	if file and allowed_file(file.filename):
-		filename=memberno+'.jpg'
+		filename=username+'.jpg'
 		file.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
 		print("Saved:")
 
@@ -395,8 +406,55 @@ def edit():
 		return render_template("Profile.html",user=user)
 
 
+@app.route("/hjklenatble12")
+def enable_get():
+	return render_template("enable.html")
 
-	def back():
-		render_template("")
+
+@app.route("/hjklenatble12",methods=['POST'])
+def enable_post():
+	username=request.form['username']
+	admin_password=request.form['admin_password']
+	regid=request.form['regid']
+
+	if not username:
+		error="Enter username"
+		flash(error)
+		return render_template("enable.html")
+
+	if not admin_password:
+		error="Enter Admin Password"
+		flash(error)
+		return render_template("enable.html")
+
+	if not regid:
+		error="Assign registration id for user"
+		flash(error)
+		return render_template("enable.html")
+
+	print(username)
+	try:
+		user=User.objects.get(username=username)
+		name=user.name
+	except :
+		user=None
+	 
+	if user is None:
+		error="No user exist with this name"
+		flash(error)
+		return render_template('enable.html')
+	if admin_password != 'kl123%':
+		error="Admin password is wrong"
+		return render_template("enable.html")
+	user.update(enabled=True)
+	user.update(regid=regid)
+	user.reload()
+
+	return render_template("enabled.html",name=user.name)
+
+	
+
+	
+
 
 

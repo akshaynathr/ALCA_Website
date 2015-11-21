@@ -4,13 +4,15 @@ from mongoengine import *
 
 
 class User(Document):
-	regid=StringField(required=True)
+	username=StringField(required=True)
+	regid=StringField(default="-1")
 	password=StringField(required=True)
 	emailid=StringField(required=True)
 	place=StringField(required=True)
 	phoneno=StringField(required=True)
 	name=StringField(required=True)
 	location=StringField(required=True)
+	telephone=StringField(required=True)
 	website=StringField()
 	company=StringField()
 	address=StringField()
@@ -18,6 +20,8 @@ class User(Document):
 	business=StringField()
 	image_id=StringField()
 	regdate=StringField()
+	enabled=BooleanField(default=False)
+
 	 
 
 	@property
