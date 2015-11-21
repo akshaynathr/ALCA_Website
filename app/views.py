@@ -301,9 +301,9 @@ def delete_id():
 	else:
 		user.delete()
 		users=User.objects.all()
-		error="Member "+ name +" deleted"
-		flash(error)
-		return render_template("Admin_Profile.html",users=users)
+		error=  name  
+		 
+		return render_template("deleted.html",name=error)
 
 
 @app.route('/edit')
