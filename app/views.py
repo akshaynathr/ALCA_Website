@@ -41,7 +41,7 @@ def login():
 		password=request.form['password']
 	
 	except Exception as e:
-		print (e)	
+		print (e)
 	 
 	if regid.replace(" ",'')== '':
 		error="Please enter your registration Id"
@@ -57,7 +57,7 @@ def login():
 
 
 
-	user=User.objects(regid=regid).first()
+	user=User.objects(Q(regid=regid) & Q (password=password) ).first()
 	if user is None:
 		error="It seems that the Register id or password you typed is wrong"
 		flash(error)
@@ -104,57 +104,57 @@ def register():
 
 	 
 	
-	if file is None:
+	if not file:
 		error="Upload profile image"
 		flash(error)
 		return render_template("Register.html")
 	
-	if name.replace(" ",'') == '':
+	if not name:
 		error="Name field cannot be nil"
 		flash(error)
 		return render_template("Register.html")
 
-	if emailid.replace(" ",'')== '' :
+	if not emailid:
 		error="Emailid field cannot be nil"
 		flash(error) 
 		return render_template("Register.html")
 
-	if location.replace(" ",'')== '' :
+	if not location:
 		error="Location field cannot be nil"
 		flash( error)
 		return render_template("Register.html")
 		
-	if phoneno.replace(" ",'') == '':
+	if not phoneno:
 		error="Phoneno field cannot be nil"
 		flash( error)
 		return render_template("Register.html")
 
-	if place.replace(" ",'') == '':
+	if not place:
 		error="City field cannot be nil"
 		flash( error)
 		return render_template("Register.html")
  
-	if password.replace(" ",'') == '':
+	if not password:
 		error="Password field cannot be nil"
 		flash( error)
 		return render_template("Register.html")
 
-	if business.replace(" ",'') == '':
+	if not business:
 		error="Business Activity field cannot be nil"
 		flash( error)
 		return render_template("Register.html")
 
-	if telephone.replace(" ",'') == '':
+	if not telephone:
 		error="Telephone field cannot be nil"
 		flash( error)
 		return render_template("Register.html")
 
-	if address.replace(" ",'') == '':
+	if not address:
 		error="Address field cannot be nil"
 		flash(error)
 		return render_template("Register.html")
 
-	if company.replace(" ",'') == '':
+	if not company:
 		error="Address field cannot be nil"
 		flash(error)
 		return render_template("Register.html")
@@ -228,6 +228,9 @@ def admin():
 
 	if sort=="sort":
 		location=request.form['location']
+		if location == 'All':
+			users=User.objects.all()
+			return render_template("Admin_Profile.html",users=users)
 		
 		users=User.objects(location=location)
 		return render_template("Admin_Profile.html",users=users)
@@ -292,7 +295,108 @@ def delete_id():
 		return render_template("Admin_Profile.html",users=users)
 
 
+@app.route('/edit')
+def edit_get():
+	return render_template("Edit.html")
+
+@app.route("/edit",methods=['POST'])
+def edit():
+	memberno=request.form['memberno']
+	password=request.form['password']
+
+	if not memberno:
+		error="Enter memberno"
+		flash(error)
+		return render_template("Edit.html")
 
 
+	if not password:
+		error="Enter password"
+		flash(error)
+		return render_template("Edit.html")
+
+
+	user=User.objects(Q(regid=memberno) & Q(password=password) ).first()
+	print(user)
+	if  user is None:
+		error="Incorrect user"
+		flash(error)
+		return render_template("Edit.html")
+	else:
+
+		name=request.form['name']	
+		emailid=request.form['emailid']
+		location=request.form['location']
+		 
+		place=request.form['place']
+		phoneno=request.form['phoneno']
+		business=request.form['business']
+		telephone=request.form['telephone']
+		file=request.files['file']
+		website=request.form['website']
+		company=request.form['company']
+		address=request.form['address']
+
+
+	 
+	
+	if  name:
+		user.update(name=name)
+		 
+	if  emailid:
+		user.update(emailid=emailid)
+
+	if location:
+		user.update(location=location)
+	
+
+	if phoneno:
+		 user.update(phoneno=phoneno)
+
+	if place:
+		 user.update(place=place)
+ 
+	if password:
+		user.update(password=password)
+
+	if  business:
+		user.update(business=business)
+
+	if telephone:
+		 user.update(telephone=telephone)
+
+	if  address:
+		user.update(address=address)
+
+	if  company:
+		user.update(company=company)
+	
+	if file and allowed_file(file.filename):
+		filename=memberno+'.jpg'
+		file.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
+		print("Saved:")
+
+
+	elif allowed_file(file.filename):
+		error="Please use a jpg image "
+		flash(error)
+		return render_template("Edit.html")
+
+		 
+	
+
+	flash("Successfully updated")
+
+
+	if user is None:
+		render_template("Error")
+	else:
+		user.reload()
+		return render_template("Profile.html",user=user)
+
+
+
+	def back():
+		render_template("")
 
 
