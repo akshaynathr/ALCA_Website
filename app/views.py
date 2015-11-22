@@ -285,23 +285,25 @@ def delete():
 def delete_id():
 	username=None
 	username=request.form['username']
-	try:
-		user=User.objects.get(username=username)
-		name=user.name
-	except :
-		user=None
 	if username.replace(" ",'')== '':
 		error="Please fill valid username"
 		flash(error)
 		return render_template("delete.html")
-	elif user is None:
+	try:
+		user=User.objects.get(username=username)
+		 
+	except :
+		user=None
+
+	
+	if user is None:
 		error="No user found with username:"+username
 		flash(error)
 		return render_template("delete.html")
 	else:
 		user.delete()
 		users=User.objects.all()
-		error=  name  
+		error=  user.name  
 		 
 		return render_template("deleted.html",name=error)
 
