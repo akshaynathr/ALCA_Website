@@ -283,6 +283,7 @@ def delete():
 
 @app.route("/delete",methods=["POST"])
 def delete_id():
+	user=None
 	username=None
 	username=request.form['username']
 	if username.replace(" ",'')== '':
@@ -290,7 +291,7 @@ def delete_id():
 		flash(error)
 		return render_template("delete.html")
 	try:
-		user=User.objects.get(username=username)
+		user=User.objects(username=username).first()
 		 
 	except :
 		user=None
@@ -302,7 +303,7 @@ def delete_id():
 		return render_template("delete.html")
 	else:
 		user.delete()
-		users=User.objects.all()
+		 
 		error=  user.name  
 		 
 		return render_template("deleted.html",name=error)
