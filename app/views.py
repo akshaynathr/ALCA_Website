@@ -290,11 +290,14 @@ def delete_id():
 		error="Please fill valid username"
 		flash(error)
 		return render_template("delete.html")
+
+
 	try:
 		user=User.objects(username=username).first()
-		 
+		
 	except :
 		user=None
+		return ("No user")
 
 	
 	if user is None:
@@ -302,9 +305,10 @@ def delete_id():
 		flash(error)
 		return render_template("delete.html")
 	else:
+		error=  user.name 
 		user.delete()
 		 
-		error=  user.name  
+		 
 		 
 		return render_template("deleted.html",name=error)
 
