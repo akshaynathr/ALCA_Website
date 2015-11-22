@@ -294,7 +294,7 @@ def delete_id():
 
 	try:
 		user=User.objects(username=username).first()
-		return "working1"
+		 
 		
 	except :
 		user=None
