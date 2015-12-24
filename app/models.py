@@ -6,6 +6,7 @@ from mongoengine import *
 class User(Document):
 	username=StringField(required=True)
 	regid=StringField(default="-1")
+	siteid=StringField(required=True)
 	password=StringField(required=True)
 	emailid=StringField(required=True)
 	place=StringField(required=True)

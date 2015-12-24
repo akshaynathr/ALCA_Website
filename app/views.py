@@ -18,6 +18,18 @@ connect('ALCA')
 ALLOWED_EXTENSION=set(['jpg'])
 
 
+def get_siteid():
+	f=open('siteid','r')
+	t=f.readlines()
+	f.close()
+	return int(t[0])
+
+def write_siteid(siteid):
+	f=open('siteid','w')
+	f.write(str(siteid))
+	f.close()
+
+	
 
 def allowed_file(filename):
 	return '.' in filename and filename.rsplit('.',1)[1] in ALLOWED_EXTENSION
@@ -93,6 +105,10 @@ def register():
 	telephone=None
 	website=None
 	business=None
+	current_siteid=get_siteid()
+	siteid=current_siteid+1
+	write_siteid(siteid)
+
 
 	name=request.form['name']	
 	emailid=request.form['emailid']
@@ -107,6 +123,8 @@ def register():
 	website=request.form['website']
 	company=request.form['company']
 	address=request.form['address']
+
+
 
 	if not username:
 		error="Username field cannot be nil"
@@ -204,9 +222,10 @@ def register():
 	user.image_id=username+'.jpg'
 	user.telephone=telephone
 	user.website=website
+	user.siteid=str(siteid)
 	user.save()
 
-	return render_template("registered.html")
+	return render_template("registered.html",user=user)
 
 @app.route('/show',methods=['GET'])
 def show():
@@ -225,34 +244,27 @@ def prof():
 def adm():
 	return render_template("Admin2.html")
 
-@app.route("/admin",methods=['POST'])
+
+
+@app.route("/admin",methods=["POST"])
 def admin():
 	regid=None
 	password=None
 	location=None
-	sort=None
+	 
 
-	try:
-		sort=request.form['sort']
-	except:
-		sort=None
 
-	if sort=="sort":
-		location=request.form['location']
-		if location == 'All':
-			users=User.objects.all()
-			return render_template("Admin_Profile.html",users=users)
-		
-		users=User.objects(location=location)
-		return render_template("Admin_Profile.html",users=users)
-
+	# search=request.form['search']
+	# enable_accont=request.form['enable_account']
 	try:
 		regid=request.form['regid']
 		password=request.form['password']
-	
+			 
 	except Exception as e:
-		print (e)	
+		print (e)	 
+
 	 
+		
 	if regid.replace(" ",'')== '':
 		error="Please enter your registration Id"
 
@@ -267,11 +279,37 @@ def admin():
 
 
 	if regid=="adminalca123%" and password=="kl123%":
-		users=User.objects.order_by('regdate')
-		return render_template("Admin_Profile.html",users=users)
+		#users=User.objects.order_by('regdate')
+		return render_template("Admin_Profile2.html")
 	else:
 		flash("Wrong username or password for admin")
 		return render_template("Admin2.html")
+
+
+
+@app.route('/admin_profile',methods=["POST"])
+def ad_prof():
+		if request.form['search']=='Search':
+			return render_template('searchAdmin.html')
+
+		else:
+			# print(request.form['enableaccount'])
+			return render_template('searchAdmin.html')
+
+
+@app.route('/search',methods=["POST"])
+def search():
+		siteid=request.form['siteid']
+		
+		try:
+			users=User.objects(siteid=siteid)
+		except:
+			users=None
+		if users(0) is None:
+			flash("No user found")
+			return render_template('searchAdmin.html')
+		else:
+			return render_template('admin_single_profile.html',users=users)
 
 
 
@@ -416,10 +454,15 @@ def edit():
 
 @app.route("/hjklenatble12")
 def enable_get():
-	return render_template("enable.html")
+	users=User.objects(enabled=False).order_by('regdate')
+	return render_template("admin_single_profile.html",users=users)
+
+@app.route('/enable')
+def enable_account():
+	return render_template('enable.html')
 
 
-@app.route("/hjklenatble12",methods=['POST'])
+@app.route("/enable",methods=['POST'])
 def enable_post():
 	username=request.form['username']
 	admin_password=request.form['admin_password']

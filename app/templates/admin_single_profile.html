@@ -32,32 +32,7 @@
 <h2 style="text-align:center"> ALCA Admin System</h2>
 <div class="row" style="">
     <div  style="background-color:#fff;padding-left:50px; padding-right:50px; " class="col-md-12 col-sm-12">
-    <form method="post">
-        <h5> Sort by place: </h5> 
-         <label>Location:</label><select name="location" class="btn">
-                   <option value="All">All</option>
-                   <option value="alappuzha">Alappuzha</option>
-                    <option value="idukki">Idukki</option>
-                  <option value="kannur">Kannur</option>
-                   <option value="ernakulam">Ernakulam</option>
-                 
-                   <option value="thrissur">Thrissur</option>
-                    <option value="kasargod">Kasargod</option>
-                     <option value="kollam">Kollam</option>
-                      <option value="kottayam">Kottayam</option>
-                       <option value="calicut">Calicut</option>
-                        <option value="palakkad">Palakkad</option>
-                         <option value="malappuram">Malappuram</option>
-
-                          <option value="pathanamthitta">Pathanamthitta</option>
-                           <option value="thiruvananthapuram">Thiruvananthapuram</option>
-                            <option value="wayanad">Wayanad</option>
-                           
- 
-</select>
-<input value="sort"  name="sort" type="submit"/>
-</form>
-
+    
 <a href="/delete" style="text-decoration:underline"> <h4 style="color:red;float:right; width:100px;"> Delete a user </h4></a>
 <a href="/admin" style="text-decoration:underline"> <h4 style="color:green; float:right; width:200px;"> Logout </h4></a>
 
@@ -68,7 +43,7 @@
     
 </div>
 <hr/>
-<h5 style="color:#F00">
+<h5 style="color:#F00" style="text-align:center;">
                 {% with messages = get_flashed_messages() %}
                   {% if messages %}
                      <ul class=flashes>
@@ -81,7 +56,7 @@
 
              </h5>
 
-             <h3 style="text-align:center;"> All registered members</h3>
+             
 
              {% if user is defined %}
                 <h3  style="text-align:center;"> No registered members </h3>
@@ -97,6 +72,7 @@
                     <div class="user-wrapper">
                          <img src="{{ url_for('static',filename='tmp/'+user.image_id) }}" class="img-responsive" /> 
                          <div class="description">
+                         {% if user.name is not defined %} No members found {% endif %}
                        <h4> {{ user.name }}</h4> 
                     {% if user.enabled %}
                     <h4 style="color:green"> Appoved</h4>
@@ -123,7 +99,7 @@
                        
                     {% else %} 
                     <h4 style="color:red; display:inline-block;"> Approval pending-</h4>
-                     <a  href="/hjklenatble12">Enable</a>
+                     <a  href="/enable">Enable</a>
 
                     {% endif %}
                     <hr />
@@ -133,6 +109,9 @@
                             {% if  user.enabled %}
                           <span   class="details">Membership id</span><strong>:{{user.regid}}</strong> <br>
                           {% endif %}
+
+                         <span   class="details">Site id</span><strong>:{{user.siteid}}</strong> <br>
+
                           <span class="details">Username</span><strong>:{{user.username }}</strong> <br>
                          <span class="details"> Mobile no</span><strong>:{{user.phoneno }}</strong> <br>
                          <span class="details"> Telephone no</span><strong>:{{user.telephone }} </strong><br>
