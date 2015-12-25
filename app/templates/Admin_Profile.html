@@ -32,7 +32,7 @@
 <h2 style="text-align:center"> ALCA Admin System</h2>
 <div class="row" style="">
     <div  style="background-color:#fff;padding-left:50px; padding-right:50px; " class="col-md-12 col-sm-12">
-    <form method="post">
+    <form method="post" action="/sort">
         <h5> Sort by place: </h5> 
          <label>Location:</label><select name="location" class="btn">
                    <option value="All">All</option>
@@ -56,6 +56,9 @@
  
 </select>
 <input value="sort"  name="sort" type="submit"/>
+</form>
+<form method="post" action="/admin_home">
+<input type="submit" value="Admin Home" name="admin_home"/>
 </form>
 
 <a href="/delete" style="text-decoration:underline"> <h4 style="color:red;float:right; width:100px;"> Delete a user </h4></a>

@@ -29,6 +29,12 @@ def write_siteid(siteid):
 	f.write(str(siteid))
 	f.close()
 
+
+@app.route('/admin_home',methods=["POST"])
+def admin_home():
+	return render_template('Admin_Profile2.html')
+
+
 	
 
 def allowed_file(filename):
@@ -82,8 +88,17 @@ def login():
 		return render_template("Profile.html",user=user)
 
  
-
-
+@app.route('/sort',methods=["POST"])
+def sort():
+	
+	sort=request.form['location']
+	if sort=="All":
+		users=User.objects.all()
+		return render_template("Admin_Profile.html",users=users)
+	else:
+		print(sort)
+		users=User.objects(location=sort).all()
+		return render_template('Admin_Profile.html',users=users)
 
 @app.route('/register')
 
@@ -312,10 +327,17 @@ def search():
 			return render_template('admin_single_profile.html',users=users)
 
 
+@app.route("/showall",methods=["POST"])
+def showall():
+	users=User.objects.all()
+	return render_template('Admin_Profile.html',users=users)
+
+
 
 @app.route("/delete")
 def delete():
 	return render_template("delete.html")
+
 
 
 
