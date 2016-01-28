@@ -376,7 +376,7 @@ def delete_id():
 
 @app.route('/edit')
 def edit_get():
-	return render_template("Edit.html")
+	return render_template("Edit2.html")
 
 @app.route("/edit",methods=['POST'])
 def edit():
@@ -386,13 +386,13 @@ def edit():
 	if not username:
 		error="Enter username"
 		flash(error)
-		return render_template("Edit.html")
+		return render_template("Edit2.html")
 
 
 	if not password:
 		error="Enter password"
 		flash(error)
-		return render_template("Edit.html")
+		return render_template("Edit2.html")
 
 
 	user=User.objects(Q(username=username) & Q(password=password) ).first()
@@ -400,13 +400,13 @@ def edit():
 	if  user is None:
 		error="Incorrect user"
 		flash(error)
-		return render_template("Edit.html")
+		return render_template("Edit2.html")
 	else:
 
 		name=request.form['name']	
 		emailid=request.form['emailid']
 		location=request.form['location']
-		 
+		regid=request.form['regid'] 
 		place=request.form['place']
 		phoneno=request.form['phoneno']
 		business=request.form['business']
@@ -421,6 +421,8 @@ def edit():
 	
 	if  name:
 		user.update(name=name)
+        if regid:
+                user.update(regid=regid)
 		 
 	if  emailid:
 		user.update(emailid=emailid)
@@ -459,7 +461,7 @@ def edit():
 	elif allowed_file(file.filename):
 		error="Please use a jpg image "
 		flash(error)
-		return render_template("Edit.html")
+		return render_template("Edit2.html")
 
 		 
 	
